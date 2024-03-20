@@ -14,14 +14,20 @@ function QuizResult() {
     dispatch(fetchAllQuizResult());
   }, []);
 
-  console.log();
+  console.log(AllQuizResult , "AllQuizResult");
   return (
     <>
     <InnerHeader />
 
 <div className="row result">
   <h2>Result</h2>
-  <div className="col-sm-6 user1">
+  {
+    AllQuizResult?.length == 0 ? <h2>
+      Waiting for your Partner to Enter Data
+    </h2> : <>
+    
+    
+    <div className="col-sm-6 user1">
   <hr />
     <div className="row">
       <div className="col-sm-4">Name : {AllQuizResult?.User1Detail?.Name}</div>
@@ -78,6 +84,9 @@ function QuizResult() {
     <ResultChart resultdata={AllQuizResult?.User2Data}/>
 
   </div>
+    </>
+  }
+ 
 </div>
     </>
   );

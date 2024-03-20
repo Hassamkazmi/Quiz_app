@@ -8,7 +8,7 @@ const ChartComponent = ({ optionSelections, clickedOption }) => {
     const [resultArray , setdata] = useState()
 
     useEffect(() => {
-        setdata(optionSelections?.map(option => option.OptionData._id === clickedOption ? 1 : 0))
+        setdata(optionSelections?.map(option => option?.OptionData?._id === clickedOption ? 1 : 0))
     },[clickedOption , optionSelections])
 
     console.log(resultArray);
@@ -18,7 +18,7 @@ const ChartComponent = ({ optionSelections, clickedOption }) => {
         const myChart = new Chart(ctx, {
             type: 'line', // Change chart type to 'line'
             data: {
-                labels: optionSelections?.map(option => option.OptionData.Name),
+                labels: optionSelections?.map(option => option?.OptionData?.Name),
                 datasets: [{
                     label: "Pair Perfect",
                     data: resultArray,
