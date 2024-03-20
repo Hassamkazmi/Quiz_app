@@ -52,7 +52,7 @@ const postSubmitQuestionSlice = createSlice({
         state.data = action?.payload;
         state.loading = false;
         state.error = null;
-        state.success = "Data Submitted Successfully";
+        state.success = "Answer Submitted Successfully";
       })
       .addCase(postSubmitQuestion.rejected, (state, action) => {
         state.loading = false;

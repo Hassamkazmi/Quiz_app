@@ -5,6 +5,7 @@ import { fetchgetRoomAccess } from "../redux/Slices/getRoomAccess";
 import { Card } from "antd";
 import Cookies from "js-cookie";
 import InnerHeader from "./InnerHeader";
+import { toast } from "react-toastify";
 
 const RoomSelection = () => {
   const { data: getRoomAccess, status } = useSelector(
@@ -15,12 +16,13 @@ const RoomSelection = () => {
     (state) => state.postUserCreation
   );
 
+  const { id } = useParams();
+
   const RoomData = getRoomAccess ? getRoomAccess : userdata;
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const { id } = useParams();
 
   useEffect(() => {
     dispatch(fetchgetRoomAccess({ id }));
@@ -29,6 +31,16 @@ const RoomSelection = () => {
   const handleuser = (token) => {
     Cookies.set("userToken", token);
     navigate("/quiz");
+  };
+
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(id)
+      .then(() => {
+        toast('Copied to clipboard');
+      })
+      .catch((error) => {
+        console.error('Failed to copy:', error);
+      });
   };
   useEffect(() => {
     const handleTouchStart = () => {
@@ -42,11 +54,15 @@ const RoomSelection = () => {
     };
   }, []);
   return (
-    <>
-    
-      {/* <InnerHeader /> */}
+    <div className="RoomSelection-main">
+       
+       <div className="clipboard">
+       <p>{id}</p>
+      <button onClick={handleCopyClick}>Copy to Clipboard</button>
+       </div>
       
       <div className="RoomSelection">
+     
         <div className="RoomSelection_left">
           <Card title="Partner 1" style={{ width: 300, margin: "20px auto" , textAlign:"center"}}>
             <p>
@@ -93,7 +109,7 @@ const RoomSelection = () => {
           </h3>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

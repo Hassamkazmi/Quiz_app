@@ -9,7 +9,7 @@ const LineChartComponent = ({resultdata}) => {
   const data = resultdata && resultdata?.map((item,i) => {
     return({
         label:`Question # ${i + 1}`,
-        value:item.TotalPercentageAchieved
+        value:item?.QuestionData?.QuestionPercentageAchieved /10
     })
   })
 

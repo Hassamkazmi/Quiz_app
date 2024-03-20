@@ -23,8 +23,6 @@ function Quiz() {
 
   const {error , success , loading } = useSelector((state) => state.postSubmitQuestion)
 
-  console.log(error , success , loading)
-
   const navigate = useNavigate();
   const [score, setScore] = useState(0);
   const [isOptionSelected, setIsOptionSelected] = useState(false);
@@ -66,6 +64,8 @@ function Quiz() {
     }
     
   }, [clickedOption]);
+
+
   useEffect(() => {
     if(success){
       toast(success)
@@ -78,6 +78,8 @@ function Quiz() {
         
       } else {
         setShowResult(true);
+        navigate("/quizresult")
+
       }
     }
     if(error){
@@ -87,14 +89,22 @@ function Quiz() {
     }
   },[success, error])
 
+  const Skip = () =>{
+    if (currentQuestion < AllQuizQuestions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);      
+    }
+    else{
+      setShowResult(true);
+
+      navigate("/quizresult")
+    }
+  }
 
   const changeQuestion = async () => {
     setIsOptionSelected(false)
     let Data = {
       QuestionId: AllQuizQuestions[currentQuestion]?._id,
-      AnswerPercentage: percentageCalculate,
-      QuestionPercentage: AllQuizQuestions[currentQuestion]?.QuestionPercentage,
-      Percentage: percentageCalculate * AllQuizQuestions[currentQuestion]?.QuestionPercentage,
+      AnswerId: clickedOption,
     };
     await dispatch(postSubmitQuestion({ Data }));
    
@@ -148,15 +158,8 @@ function Quiz() {
          <InnerHeader />
 
       <div className="quiz-app-css">
-        <div className="container">
-          {showResult ? (
-            <QuizResult
-              score={score}
-              totalScore={AllQuizQuestions.length}
-              tryAgain={resetAll}
-            />
-          ) : (
-            <>
+        <div className="container1">
+        <>
               <div className="question">
                 <span id="question-number">
                   {AllQuizQuestions &&
@@ -168,32 +171,33 @@ function Quiz() {
                 </span>
               </div>
               <div className="option-container">
-                {optionsData?.map((option, i) => {
+                {AllQuizQuestions[currentQuestion]?.QuestionOptions?.map((option, i) => {
                   return (
                     <button
                       className={`option-btn ${
-                        clickedOption === i + 1 ? "checked" : null
+                        clickedOption === option?.OptionData?._id ? "checked" : null
                       }`}
                       key={i}
-                      onClick={() => setClickedOption(i + 1)}
+                      onClick={() => setClickedOption(option?.OptionData?._id)}
                     >
-                      {option}
+                      {option?.OptionData?.Name}
                     </button>
                   );
                 })}
-                <ChartComponent optionSelections={optionSelections} />{" "}
-                {/* Render the chart component */}
-              </div>
+                           </div>
             </>
-          )}
         </div>
         <div className="quiz-app-right">
-          <img src={imageSrc} alt="" />
-
+          {/* <img src={imageSrc} alt="" /> */}
+          <ChartComponent 
+                  optionSelections={AllQuizQuestions[currentQuestion]?.QuestionOptions} 
+                  clickedOption={clickedOption} 
+                /> 
           <div className="btn-quiz">
             {
               showResult ?     <button id="next-button" onClick={resetAll}>Try Again</button>
-              :  <input
+              :  <>
+              <input
               type="button"
               value="Next"
               id="next-button"
@@ -201,8 +205,10 @@ function Quiz() {
 
               onClick={changeQuestion}
             />
+                       <button onClick={Skip} className="skip-btn">skip</button>
+
+              </>
             }
-           
           </div>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchgetRoomAccess } from "../redux/Slices/getRoomAccess";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
@@ -11,18 +12,18 @@ const MyForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [ID, setID] = useState(null);
+  const [loading, setloading] = useState(false);
 
   const token = Cookies.get("useToken") 
   const { data: getRoomAccess, status } = useSelector(
     (state) => state.getRoomAccess
   );
+
   const onFinish = (values) => {
     const id = values.yourName;
     dispatch(fetchgetRoomAccess({ id }));
+    setloading(true)
   };
-
-
-  console.log(status)
 
   useEffect(() => {
     if (status && ID) {
@@ -30,9 +31,16 @@ const MyForm = () => {
     }
   }, [getRoomAccess]);
 
+  // useEffect(() => {
+  //   if(!status && ID){
+  //     toast("Room not exist")
+  //     setloading(true)
+
+  //   }
+  // },[loading])
+
   return (
-    <div className="code-css">
-      <h3>Do you have code ?</h3>
+    <div className="">
       <Form
         name="basic"
         initialValues={{ remember: true }}
@@ -48,16 +56,12 @@ const MyForm = () => {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit">
+        <Button type="primary" className="button button-1" htmlType="submit">
             Submit
           </Button>
         </Form.Item>
       </Form>
-      {/* <img
-        src="https://media.tenor.com/images/752063d293a04a2ce7ac64b8f983e4d2/tenor.gif"
-        alt=""
-        style={{ marginLeft: "20%" }}
-      /> */}
+    
     </div>
   );
 };

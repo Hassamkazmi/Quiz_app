@@ -20,8 +20,9 @@ display: flex;
   
 }
 .code-css h3 {
-  padding: 15px;
+  padding: 12px 0px 0px 0px;
   text-align: center;
+  font-family: emoji;
 }
 .ant-form-item-control-input-content {
   text-align: end;
@@ -162,12 +163,16 @@ body{
 }
 .quiz-app-css{
 display: flex;
-justify-content: space-evenly;
-}
-.quiz-app-right{
-display: flex;
 justify-content: center;
-align-items: center;
+}
+.quiz-app-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35%;
+}
+.container1 {
+  width: 600px;
 }
 .quiz-app-right img{
 width: 300px;
@@ -186,7 +191,6 @@ justify-content: space-evenly;
 gap: 30px;
 }
 .RoomSelection_left{
-/* background-color: #a2a3a3; */
 height: 300px;
 width: 100%;
 
@@ -203,8 +207,10 @@ width: 100%;
   justify-content: space-evenly;
   align-items: center;
   gap: 30px;
+}
+.RoomSelection-main{
+  background-color: brown;
   height: 100vh;
-  background: brown;
 }
 
 .back {}
@@ -305,4 +311,206 @@ width: 100%;
 
 .ant-card-body {
   text-align: left;
+}
+button.button.button-1.newbtn {
+  padding: 20px;
+  margin: 15px;
+}
+.button {
+  width: 170px;
+  padding-top: 7px;
+  padding-bottom: 30px;
+  text-align: center;
+  color: #000;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-left: 30px;
+  margin-bottom: 30px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.button-1 {
+  background-color: transparent;
+  border: 3px solid #fff;
+  border-radius: 10px;
+  -webkit-transition: all .15s ease-in-out;
+  transition: all .15s ease-in-out;
+  color: #fff;
+}
+.button-1:hover {
+  box-shadow: 0 0 10px 0 #fff inset, 0 0 20px 2px #fff;
+  border: 3px solid #fff;
+}
+
+.row.main .col-sm-6 img{
+width: 100%;
+}
+
+.ant-row.ant-form-item-row {
+  display: inline-block;
+}
+
+.ant-form {
+  margin: 20px auto;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: transparent;
+  box-shadow:none;
+}
+
+.row {
+
+  margin-top: 0px !important;
+  margin-right: 0px !important; 
+  margin-left: 0px !important;
+}
+
+.ant-input, .ant-select-selector, .ant-input-number {
+  width: 100%;
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 10px;
+  border: 2px solid #fff;
+}
+.ant-select-selector{
+  width: 100%;
+  border-radius: 5px;
+  font-size: 18px;
+  line-height: 10px;
+  border: 2px solid #fff;
+}
+.ant-select-selector {
+  width: 100% !important;
+  height: 100%;
+}
+.custom-form-item1 {
+  width: 100%;
+  border-radius: 10px;
+  font-size: 18px;
+  line-height: 10px;
+  border: 1px solid #fff;
+}
+
+.ant-select.ant-select-in-form-item {
+  height: 36px;
+}
+
+.row.main {
+  background: brown;
+  color: #fff;
+}
+
+.ant-form-item .ant-form-item-label >label.ant-form-item-required:not(.ant-form-item-required-mark-optional)::before {
+
+  color: #fff !important;
+
+}
+
+label.ant-form-item-required {
+  color: #fff !important;
+}
+.ant-row.ant-form-item-row{
+  width: 80%;
+
+}
+
+label.ant-form-item-required {
+  color: #fff !important;
+  font-size: 12px !important;
+  font-family: emoji !important;
+}
+.ant-modal-content {
+  background: brown !important;
+}
+
+ul.mb-3.nav.nav-tabs {
+  margin: 10px;
+  display: flex;
+  justify-content: space-between;
+}
+
+button#uncontrolled-tab-example-tab-profile {
+  font-size: 16px;
+  font-weight: 700;
+}
+button#uncontrolled-tab-example-tab-home{
+  font-size: 16px;
+  font-weight: 700;
+}
+.clipboard {
+  background: aliceblue;
+  /* display: flex; */
+  text-align: center;
+  justify-content: center;
+  padding-bottom: 15px;
+}
+
+.clipboard button {
+  border: 3px solid brown;
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+.clipboard p{
+  padding: 8px;
+  border-radius: 6px;
+  font-weight: 700;
+}
+
+.row.result {
+  height: 100%;
+  width: 100%;
+}
+
+.row.result h2{
+  text-align: center;
+
+}
+
+.col-sm-6.user1{
+  min-height: 100vh;
+  /* background-color: #990000; */
+}
+.col-sm-6.user2{
+  min-height: 100vh;
+  /* background-color: #eb6969; */
+}
+
+.skip-btn{
+  padding: 10px;
+    border: none;
+    background-color: brown;
+    color: white;
+    border-radius: 5px;
+    box-shadow: 3px 3px 2px 1px rgb(127, 109, 109);
+    font-size: larger;
+    font-weight: bold;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    transition: 0.2s;
+    width: 100px;
+    position: absolute;
+    bottom: 15px;
+    left: 40px;
+}
+tr{
+  border: 1px solid #000 !important;
+  padding: 4px 10px !important;
+  text-transform: capitalize;
+
+}
+td{
+  font-size: 15px;
+    font-family: math;
+    padding: 4px;
+}
+
+.col-sm-6.user1 .row .col-sm-4 {
+  font-weight: 700 !important;
+  font-size: 14px !important;
+}
+.col-sm-6.user2 .row .col-sm-4 {
+  font-weight: 700 !important;
+  font-size: 14px !important;
 }

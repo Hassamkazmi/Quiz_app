@@ -45,7 +45,7 @@ export const fetchAllQuizResult = createAsyncThunk(
       `http://localhost:5000/Result`,
       config
     );
-    const Data = res.data.data;
+    const Data = res.data;
     return Data;
   }
 );
