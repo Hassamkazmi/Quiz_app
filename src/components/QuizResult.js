@@ -1,94 +1,56 @@
-import React, { useEffect } from "react";
-import { UseSelector, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { fetchAllQuizResult } from "../redux/Slices/getAllResult";
 import ResultChart from "./ResultChartComponent";
+import ResultChartPieComponent from "./ResultChartPieComponent";
 import InnerHeader from "./InnerHeader";
+import Heart from "react-heart";
+import { fetchAllQuizQuestionsreset } from "../redux/Slices/getAllQuestion";
 
 function QuizResult() {
   const { data: AllQuizResult, status } = useSelector(
     (state) => state.AllQuizResult
   );
   const dispatch = useDispatch();
+  const [active, setActive] = useState(false);
 
   useEffect(() => {
     dispatch(fetchAllQuizResult());
+    dispatch(fetchAllQuizQuestionsreset())
   }, []);
 
-  console.log(AllQuizResult , "AllQuizResult");
   return (
-    <>
-    <InnerHeader />
+    <div className="container111">
+      <div id="particles-js" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}></div>
+      <InnerHeader />
 
-<div className="row result">
-  <h2>Result</h2>
-  {
-    AllQuizResult?.length == 0 ? <h2>
-      Waiting for your Partner to Enter Data
-    </h2> : <>
-    
-    
-    <div className="col-sm-6 user1">
-  <hr />
-    <div className="row">
-      <div className="col-sm-4">Name : {AllQuizResult?.User1Detail?.Name}</div>
-      <div className="col-sm-4">Age : {AllQuizResult?.User1Detail?.Age}</div>
-      <div className="col-sm-4">Email : {AllQuizResult?.User1Detail?.email}</div>
+      {AllQuizResult?.length == 0 ? (
+        <h2 style={{ textAlign: "center" }}>
+          Waiting for your Partner to Enter Data
+        </h2>
+      ) : (
+        <div className="row result ">
+          {/* <Heart
+            isActive={active}
+            onClick={() => setActive(!active)}
+            animationTrigger="both"
+            inactiveColor="rgba(255,125,125,.75)"
+            activeColor="brown"
+            style={{ marginTop: "1rem" }}
+            animationDuration={0.1}
+          /> */}
+          <h3 style={{textAlign:"center" , color:"brown"}}>Result Anounced</h3>
+          <div className="ResultChart">
+            <ResultChartPieComponent resultdata={AllQuizResult?.User1Data} />
+            <ResultChartPieComponent resultdata={AllQuizResult?.User2Data} />
+            <div className="heartContainer">
+              <h3 className="CompatiblePercentage">{AllQuizResult?.CompatiblePercentage}%</h3>
+            </div>
+          </div>
+          <ResultChart resultdata={AllQuizResult} />
+        </div>
+      )}
     </div>
-    <hr />
-    <table>
-      <thead>
-        <th>Question</th>
-        <th>Optained</th>
-      </thead>
-      <tbody>
-        {AllQuizResult?.User1Data?.map((item, i) => {
-          return (
-            <tr>
-              <td>{item?.QuestionData?.Question}</td>
-              <td>
-                {item?.QuestionData?.QuestionPercentageAchieved / 10} %
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-    <ResultChart resultdata={AllQuizResult?.User1Data}/>
-  </div>
-  <div className="col-sm-6 user2">
-  <hr />
-    <div className="row">
-      <div className="col-sm-4">Name : {AllQuizResult?.User2Detail?.Name}</div>
-      <div className="col-sm-4">Age : {AllQuizResult?.User2Detail?.Age}</div>
-      <div className="col-sm-4">Email : {AllQuizResult?.User2Detail?.email}</div>
-    </div>
-    <hr />
-    <table>
-      <thead>
-        <th>Question</th>
-        <th>Optained</th>
-      </thead>
-      <tbody>
-        {AllQuizResult?.User2Data?.map((item, i) => {
-          return (
-            <tr>
-              <td>{item?.QuestionData?.Question}</td>
-              <td>
-                {item?.QuestionData?.QuestionPercentageAchieved / 10} %
-              </td>
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-    <ResultChart resultdata={AllQuizResult?.User2Data}/>
-
-  </div>
-    </>
-  }
- 
-</div>
-    </>
   );
 }
 
