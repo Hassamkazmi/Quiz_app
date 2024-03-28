@@ -13,19 +13,23 @@ const AllQuizResultSlice = createSlice({
   initialState: {
     data: [],
     status: STATUSES.IDLE,
+    error: null, // Add error field to store error information
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchAllQuizResult.pending, (state, action) => {
         state.status = STATUSES.LOADING;
+        state.error = null; // Reset error on pending
       })
       .addCase(fetchAllQuizResult.fulfilled, (state, action) => {
         state.data = action.payload;
         state.status = STATUSES.IDLE;
+        state.error = null; // Reset error on success
       })
       .addCase(fetchAllQuizResult.rejected, (state, action) => {
         state.status = STATUSES.ERROR;
+        state.error = action.error.message; // Store the error message
       });
   },
 });
@@ -41,11 +45,21 @@ export const fetchAllQuizResult = createAsyncThunk(
         Authorization: token,
       },
     };
-    const res = await axios.get(
-      `http://localhost:5000/Result`,
-      config
-    );
-    const Data = res.data;
-    return Data;
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/Result`,
+        config
+      );
+      return res.data;
+    } catch (error) {
+      if (error.response && error.response.status === 401) {
+        // Handle 401 Unauthorized here
+        // For example, redirect to login page or display a message
+        throw new Error("Unauthorized");
+      } else {
+        // For other errors, let the rejection handler in extraReducers handle them
+        throw error;
+      }
+    }
   }
 );
